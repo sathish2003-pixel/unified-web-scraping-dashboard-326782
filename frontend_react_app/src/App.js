@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
+import { 
+  FaGlobe, 
+  FaFilePdf, 
+  FaDownload, 
+  FaCog, 
+  FaHistory, 
+  FaBolt, 
+  FaBars, 
+  FaBell, 
+  FaQuestionCircle 
+} from 'react-icons/fa';
 import ScrapeSection from './components/ScrapeSection';
 import PDFToolsSection from './components/PDFToolsSection';
 import DownloadsSection from './components/DownloadsSection';
@@ -17,12 +28,12 @@ function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const sections = [
-    { id: 'scrape', label: 'Scrape', icon: '🌐' },
-    { id: 'pdf', label: 'PDF Tools', icon: '📄' },
-    { id: 'downloads', label: 'Downloads', icon: '⬇️' },
-    { id: 'pipelines', label: 'Pipelines', icon: '⚙️' },
-    { id: 'history', label: 'History', icon: '📜' },
-    { id: 'settings', label: 'Settings', icon: '⚡' }
+    { id: 'scrape', label: 'Scrape', icon: FaGlobe },
+    { id: 'pdf', label: 'PDF Tools', icon: FaFilePdf },
+    { id: 'downloads', label: 'Downloads', icon: FaDownload },
+    { id: 'pipelines', label: 'Pipelines', icon: FaCog },
+    { id: 'history', label: 'History', icon: FaHistory },
+    { id: 'settings', label: 'Settings', icon: FaBolt }
   ];
 
   // PUBLIC_INTERFACE
@@ -54,15 +65,15 @@ function App() {
           onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
           aria-label="Toggle sidebar"
         >
-          ☰
+          <FaBars />
         </button>
         <h1 className="app-title">Web Scraping Command Center</h1>
         <div className="quick-actions">
           <button className="quick-action-btn" title="Notifications">
-            🔔
+            <FaBell />
           </button>
           <button className="quick-action-btn" title="Help">
-            ❓
+            <FaQuestionCircle />
           </button>
         </div>
       </header>
@@ -71,17 +82,20 @@ function App() {
         {/* Sidebar Navigation */}
         <aside className={`sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
           <nav className="sidebar-nav">
-            {sections.map(section => (
-              <button
-                key={section.id}
-                className={`nav-item ${activeSection === section.id ? 'active' : ''}`}
-                onClick={() => setActiveSection(section.id)}
-                title={section.label}
-              >
-                <span className="nav-icon">{section.icon}</span>
-                {!sidebarCollapsed && <span className="nav-label">{section.label}</span>}
-              </button>
-            ))}
+            {sections.map(section => {
+              const IconComponent = section.icon;
+              return (
+                <button
+                  key={section.id}
+                  className={`nav-item ${activeSection === section.id ? 'active' : ''}`}
+                  onClick={() => setActiveSection(section.id)}
+                  title={section.label}
+                >
+                  <span className="nav-icon"><IconComponent /></span>
+                  {!sidebarCollapsed && <span className="nav-label">{section.label}</span>}
+                </button>
+              );
+            })}
           </nav>
         </aside>
 

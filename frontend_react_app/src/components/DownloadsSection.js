@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaDownload, FaTrash, FaCheckCircle, FaHourglass } from 'react-icons/fa';
 
 // PUBLIC_INTERFACE
 /**
@@ -86,12 +87,12 @@ function DownloadsSection() {
             onClick={startDownloads}
             disabled={isDownloading || !urls.trim()}
           >
-            {isDownloading ? <span className="spinner"></span> : '⬇️'}
+            {isDownloading ? <span className="spinner"></span> : <FaDownload />}
             {isDownloading ? 'Downloading...' : 'Start Downloads'}
           </button>
           {downloads.length > 0 && (
             <button className="btn btn-secondary" onClick={clearCompleted}>
-              🗑️ Clear Completed
+              <FaTrash /> Clear Completed
             </button>
           )}
         </div>
@@ -119,9 +120,9 @@ function DownloadsSection() {
                     </div>
                   </div>
                   <span className={`status-badge ${download.status === 'completed' ? 'success' : download.status === 'downloading' ? 'running' : 'idle'}`}>
-                    {download.status === 'completed' && '✓'}
+                    {download.status === 'completed' && <FaCheckCircle />}
                     {download.status === 'downloading' && <span className="spinner"></span>}
-                    {download.status === 'queued' && '⏳'}
+                    {download.status === 'queued' && <FaHourglass />}
                     {' '}
                     {download.status}
                   </span>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaSave, FaCheckCircle, FaCircle } from 'react-icons/fa';
 
 // PUBLIC_INTERFACE
 /**
@@ -152,7 +153,7 @@ function SettingsSection() {
             <strong>Environment:</strong> Demo
           </div>
           <div className="card">
-            <strong>Status:</strong> <span style={{ color: 'var(--success)' }}>● Online</span>
+            <strong>Status:</strong> <span style={{ color: 'var(--success)' }}><FaCircle style={{ fontSize: '0.5rem' }} /> Online</span>
           </div>
         </div>
 
@@ -165,7 +166,7 @@ function SettingsSection() {
         className={`btn ${saved ? 'btn-success' : 'btn-primary'}`}
         onClick={saveSettings}
       >
-        {saved ? '✓ Settings Saved' : '💾 Save Settings'}
+        {saved ? <><FaCheckCircle /> Settings Saved</> : <><FaSave /> Save Settings</>}
       </button>
     </div>
   );

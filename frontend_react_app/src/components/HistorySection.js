@@ -1,4 +1,15 @@
 import React, { useState } from 'react';
+import { 
+  FaGlobe, 
+  FaFilePdf, 
+  FaDownload, 
+  FaCog, 
+  FaCheckCircle, 
+  FaTimes, 
+  FaClock, 
+  FaChartBar, 
+  FaClipboard 
+} from 'react-icons/fa';
 
 // PUBLIC_INTERFACE
 /**
@@ -68,12 +79,12 @@ function HistorySection() {
 
   const getTypeIcon = (type) => {
     const icons = {
-      scrape: '🌐',
-      pdf: '📄',
-      download: '⬇️',
-      pipeline: '⚙️'
+      scrape: FaGlobe,
+      pdf: FaFilePdf,
+      download: FaDownload,
+      pipeline: FaCog
     };
-    return icons[type] || '📋';
+    return icons[type] || FaClipboard;
   };
 
   return (
@@ -111,39 +122,42 @@ function HistorySection() {
         </div>
 
         <div className="grid">
-          {filteredHistory.map(item => (
-            <div key={item.id} className="card">
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.75rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <span style={{ fontSize: '1.5rem' }}>{getTypeIcon(item.type)}</span>
-                  <div>
-                    <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
-                      {item.operation}
-                    </div>
-                    <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                      {item.target}
+          {filteredHistory.map(item => {
+            const IconComponent = getTypeIcon(item.type);
+            return (
+              <div key={item.id} className="card">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.75rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <span style={{ fontSize: '1.5rem' }}><IconComponent /></span>
+                    <div>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                        {item.operation}
+                      </div>
+                      <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+                        {item.target}
+                      </div>
                     </div>
                   </div>
+                  <span className={`status-badge ${item.status === 'success' ? 'success' : 'error'}`}>
+                    {item.status === 'success' ? <FaCheckCircle /> : <FaTimes />} {item.status}
+                  </span>
                 </div>
-                <span className={`status-badge ${item.status === 'success' ? 'success' : 'error'}`}>
-                  {item.status === 'success' ? '✓' : '✗'} {item.status}
-                </span>
-              </div>
 
-              <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border-color)' }}>
-                <span>⏱️ {item.duration}</span>
-                <span>📊 {item.itemsProcessed} items</span>
-                <span>🕐 {item.timestamp}</span>
-              </div>
+                <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border-color)' }}>
+                  <span><FaClock style={{ fontSize: '0.75rem' }} /> {item.duration}</span>
+                  <span><FaChartBar style={{ fontSize: '0.75rem' }} /> {item.itemsProcessed} items</span>
+                  <span><FaClock style={{ fontSize: '0.75rem' }} /> {item.timestamp}</span>
+                </div>
 
-              <button
-                className="btn btn-secondary"
-                style={{ marginTop: '0.75rem', width: '100%', fontSize: '0.875rem' }}
-              >
-                📋 View Details
-              </button>
-            </div>
-          ))}
+                <button
+                  className="btn btn-secondary"
+                  style={{ marginTop: '0.75rem', width: '100%', fontSize: '0.875rem' }}
+                >
+                  <FaClipboard /> View Details
+                </button>
+              </div>
+            );
+          })}
         </div>
 
         {filteredHistory.length === 0 && (

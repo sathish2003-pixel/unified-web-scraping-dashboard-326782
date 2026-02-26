@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaBolt, FaCheckCircle, FaFilePdf, FaDownload } from 'react-icons/fa';
 
 // PUBLIC_INTERFACE
 /**
@@ -95,7 +96,8 @@ function PDFToolsSection() {
           />
           {selectedFile && (
             <div style={{ marginTop: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-              📄 {selectedFile.name} ({selectedFile.size})
+              <FaFilePdf style={{ marginRight: '0.5rem' }} />
+              {selectedFile.name} ({selectedFile.size})
             </div>
           )}
         </div>
@@ -119,7 +121,7 @@ function PDFToolsSection() {
           onClick={processPDF}
           disabled={isProcessing || !selectedFile}
         >
-          {isProcessing ? <span className="spinner"></span> : '⚡'}
+          {isProcessing ? <span className="spinner"></span> : <FaBolt />}
           {isProcessing ? 'Processing...' : 'Process PDF'}
         </button>
 
@@ -139,7 +141,7 @@ function PDFToolsSection() {
         <div className="panel">
           <div className="panel-header">
             <h3 className="panel-title">Operation Complete</h3>
-            <span className="status-badge success">✓ Success</span>
+            <span className="status-badge success"><FaCheckCircle /> Success</span>
           </div>
 
           <div className="grid grid-2">
@@ -182,14 +184,15 @@ function PDFToolsSection() {
               <h4 style={{ marginBottom: '0.75rem', color: 'var(--text-secondary)' }}>Generated Files</h4>
               {result.files.map((file, index) => (
                 <div key={index} className="card" style={{ marginBottom: '0.5rem' }}>
-                  📄 {file}
+                  <FaFilePdf style={{ marginRight: '0.5rem' }} />
+                  {file}
                 </div>
               ))}
             </div>
           )}
 
           <button className="btn btn-success" style={{ marginTop: '1rem' }}>
-            ⬇️ Download Results
+            <FaDownload /> Download Results
           </button>
         </div>
       )}

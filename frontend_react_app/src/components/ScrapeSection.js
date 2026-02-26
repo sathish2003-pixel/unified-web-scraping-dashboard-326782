@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaRocket, FaCircle, FaCheckCircle, FaFileDownload, FaStar, FaDollarSign } from 'react-icons/fa';
 
 // PUBLIC_INTERFACE
 /**
@@ -71,7 +72,7 @@ function ScrapeSection() {
         <div className="panel-header">
           <h3 className="panel-title">Configuration</h3>
           <div className="status-badge idle">
-            {isRunning ? <span className="spinner"></span> : '⚪'} 
+            {isRunning ? <span className="spinner"></span> : <FaCircle />} 
             {isRunning ? 'Running' : 'Idle'}
           </div>
         </div>
@@ -105,7 +106,7 @@ function ScrapeSection() {
           onClick={simulateScrape}
           disabled={isRunning || !url || !selectors}
         >
-          {isRunning ? <span className="spinner"></span> : '🚀'} 
+          {isRunning ? <span className="spinner"></span> : <FaRocket />} 
           {isRunning ? 'Scraping...' : 'Start Scraping'}
         </button>
       </div>
@@ -139,7 +140,7 @@ function ScrapeSection() {
         <div className="panel">
           <div className="panel-header">
             <h3 className="panel-title">Results</h3>
-            <span className="status-badge success">✓ {results.itemsFound} items</span>
+            <span className="status-badge success"><FaCheckCircle /> {results.itemsFound} items</span>
           </div>
 
           <div className="grid grid-2">
@@ -159,18 +160,18 @@ function ScrapeSection() {
             {results.dataExtracted.map((item, index) => (
               <div key={index} className="card">
                 <div style={{ marginBottom: '0.5rem' }}>
-                  <strong style={{ color: 'var(--indigo-light)' }}>{item.title}</strong>
+                  <strong style={{ color: 'var(--primary)' }}>{item.title}</strong>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                  <span>💰 {item.price}</span>
-                  <span>⭐ {item.rating}</span>
+                  <span><FaDollarSign style={{ fontSize: '0.75rem' }} /> {item.price}</span>
+                  <span><FaStar style={{ fontSize: '0.75rem' }} /> {item.rating}</span>
                 </div>
               </div>
             ))}
           </div>
 
           <button className="btn btn-success" style={{ marginTop: '1rem' }}>
-            📥 Export to JSON
+            <FaFileDownload /> Export to JSON
           </button>
         </div>
       )}

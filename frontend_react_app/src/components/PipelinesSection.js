@@ -1,4 +1,13 @@
 import React, { useState } from 'react';
+import { 
+  FaGlobe, 
+  FaBroom, 
+  FaSync, 
+  FaCheckCircle, 
+  FaFileExport, 
+  FaPlay, 
+  FaSave 
+} from 'react-icons/fa';
 
 // PUBLIC_INTERFACE
 /**
@@ -13,11 +22,11 @@ function PipelinesSection() {
   const [pipelineResult, setPipelineResult] = useState(null);
 
   const availableSteps = [
-    { id: 'scrape', name: 'Web Scraping', icon: '🌐' },
-    { id: 'clean', name: 'Data Cleaning', icon: '🧹' },
-    { id: 'transform', name: 'Transform Data', icon: '🔄' },
-    { id: 'validate', name: 'Validation', icon: '✓' },
-    { id: 'export', name: 'Export Results', icon: '📤' }
+    { id: 'scrape', name: 'Web Scraping', icon: FaGlobe },
+    { id: 'clean', name: 'Data Cleaning', icon: FaBroom },
+    { id: 'transform', name: 'Transform Data', icon: FaSync },
+    { id: 'validate', name: 'Validation', icon: FaCheckCircle },
+    { id: 'export', name: 'Export Results', icon: FaFileExport }
   ];
 
   // PUBLIC_INTERFACE
@@ -82,30 +91,33 @@ function PipelinesSection() {
         <div className="form-group">
           <label className="form-label">Pipeline Steps (select in order)</label>
           <div className="grid grid-2">
-            {availableSteps.map(step => (
-              <div
-                key={step.id}
-                className="card"
-                onClick={() => !isRunning && toggleStep(step.id)}
-                style={{
-                  cursor: isRunning ? 'not-allowed' : 'pointer',
-                  border: selectedSteps.includes(step.id) ? '2px solid var(--indigo-primary)' : '1px solid var(--border-color)',
-                  background: selectedSteps.includes(step.id) ? 'rgba(99, 102, 241, 0.1)' : 'var(--bg-secondary)'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <span style={{ fontSize: '1.5rem' }}>{step.icon}</span>
-                  <div>
-                    <div style={{ fontWeight: 600 }}>{step.name}</div>
-                    {selectedSteps.includes(step.id) && (
-                      <div style={{ fontSize: '0.75rem', color: 'var(--indigo-light)' }}>
-                        Step {selectedSteps.indexOf(step.id) + 1}
-                      </div>
-                    )}
+            {availableSteps.map(step => {
+              const IconComponent = step.icon;
+              return (
+                <div
+                  key={step.id}
+                  className="card"
+                  onClick={() => !isRunning && toggleStep(step.id)}
+                  style={{
+                    cursor: isRunning ? 'not-allowed' : 'pointer',
+                    border: selectedSteps.includes(step.id) ? '2px solid var(--primary)' : '1px solid var(--border-color)',
+                    background: selectedSteps.includes(step.id) ? 'rgba(55, 65, 81, 0.1)' : 'var(--bg-secondary)'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <span style={{ fontSize: '1.5rem' }}><IconComponent /></span>
+                    <div>
+                      <div style={{ fontWeight: 600 }}>{step.name}</div>
+                      {selectedSteps.includes(step.id) && (
+                        <div style={{ fontSize: '0.75rem', color: 'var(--primary)' }}>
+                          Step {selectedSteps.indexOf(step.id) + 1}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -114,7 +126,7 @@ function PipelinesSection() {
           onClick={runPipeline}
           disabled={isRunning || !pipelineName || selectedSteps.length === 0}
         >
-          {isRunning ? <span className="spinner"></span> : '▶️'}
+          {isRunning ? <span className="spinner"></span> : <FaPlay />}
           {isRunning ? 'Running Pipeline...' : 'Execute Pipeline'}
         </button>
       </div>
@@ -131,6 +143,7 @@ function PipelinesSection() {
           <div style={{ marginBottom: '1.5rem' }}>
             {selectedSteps.map((stepId, index) => {
               const step = availableSteps.find(s => s.id === stepId);
+              const IconComponent = step.icon;
               const status = index < currentStep ? 'completed' : index === currentStep ? 'running' : 'pending';
 
               return (
@@ -139,19 +152,19 @@ function PipelinesSection() {
                   className="card"
                   style={{
                     marginBottom: '0.75rem',
-                    border: status === 'running' ? '1px solid var(--indigo-primary)' : '1px solid var(--border-color)',
+                    border: status === 'running' ? '1px solid var(--primary)' : '1px solid var(--border-color)',
                     opacity: status === 'pending' ? 0.5 : 1
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <span style={{ fontSize: '1.5rem' }}>{step.icon}</span>
+                    <span style={{ fontSize: '1.5rem' }}><IconComponent /></span>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontWeight: 600 }}>{step.name}</div>
                       <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
                         Step {index + 1}
                       </div>
                     </div>
-                    {status === 'completed' && <span style={{ color: 'var(--success)' }}>✓</span>}
+                    {status === 'completed' && <span style={{ color: 'var(--success)' }}><FaCheckCircle /></span>}
                     {status === 'running' && <span className="spinner"></span>}
                   </div>
                 </div>
@@ -165,7 +178,7 @@ function PipelinesSection() {
         <div className="panel">
           <div className="panel-header">
             <h3 className="panel-title">Pipeline Complete</h3>
-            <span className="status-badge success">✓ Success</span>
+            <span className="status-badge success"><FaCheckCircle /> Success</span>
           </div>
 
           <div className="grid grid-3">
@@ -190,7 +203,7 @@ function PipelinesSection() {
           </div>
 
           <button className="btn btn-success" style={{ marginTop: '1rem' }}>
-            💾 Save Pipeline
+            <FaSave /> Save Pipeline
           </button>
         </div>
       )}
